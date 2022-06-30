@@ -15,6 +15,7 @@
             </personname>
             <email>toms@suse.de</email>
         </author>
+        <pubdate>2022-06-30</pubdate>
         <abstract>
             <para>
                 Our documentation format of choice is DocBook XML.
@@ -227,6 +228,66 @@
         </itemizedlist>
 
         <section>
+            <title>Choosing DocBook elements</title>
+            <para>
+                DocBook is a format for writing technical documentation.
+                It's based on XML, so all the rules for XML apply to DocBook
+                as well.
+            </para>
+            <para>
+                DocBook consists of roughly 400 elements. Don't worry, you won't
+                need all of them. These elements are sorted into three categories:
+            </para>
+            <itemizedlist>
+                <listitem>
+                    <formalpara>
+                        <title>Division elements:</title>
+                        <para>
+                            structure your documents into book, article, chapter,
+                            section, etc.
+                        </para>
+                    </formalpara>
+                </listitem>
+                <listitem>
+                    <formalpara>
+                        <title>Block elements</title>
+                        <para>
+                            are greater building blocks like example, table, figure,
+                            procedure etc.
+                        </para>
+                    </formalpara>
+                </listitem>
+                <listitem>
+                    <formalpara>
+                        <title>Inline elements</title>
+                        <para>
+                            for the more tiny things to markup; usually inside
+                            paragraphs and other block elements.
+                            For example, command, filename, quote, etc.
+                        </para>
+                    </formalpara>
+                </listitem>
+                <listitem>
+                    <formalpara>
+                        <title>Metadata elements</title>
+                        <para>
+                            elements which may or may not appear in your target
+                            format. Normally acts as <quote>metadata</quote>.
+                            Usually everything that you can find inside
+                            <tag>info</tag>.
+                        </para>
+                    </formalpara>
+                </listitem>
+            </itemizedlist>
+
+            <para>
+                When you create your document, you start with one division element
+                as root element. Depending on your structure, you add more
+                division elements. Add block elements inside your division elements.
+            </para>
+        </section>
+
+        <section>
             <title>Validating DocBook documents</title>
             <para>
                 If you write in DocBook 5.x, use the command <command>jing</command> to
@@ -292,5 +353,5 @@
                 </para>
             </listitem>
         </itemizedlist>
-    </section
+    </section>
 </article>
