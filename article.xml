@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="http://docbook.org/xml/5.2/rng/docbook.rng" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="http://docbook.org/xml/5.2/sch/docbook.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+
+<article version="5.1" 
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Editing and writing in DocBook XML</title>
+    <subtitle>Hackweek 21</subtitle>
+    <info>
+        <author>
+            <personname>
+                <firstname>Tom</firstname>
+                <surname>Schraitle</surname>
+            </personname>
+            <email>toms@suse.de</email>
+        </author>
+        <abstract>
+            <para>
+                Our documentation format of choice is DocBook XML.
+                We heard people saying that it is <quote>too complicated</quote>
+                or <quote>too complex</quote>. But it has many advantages. And if
+                you understand the way of tagging, it is no rocket science anymore.
+                The purpose of this session is to enable you to edit documentation
+                sources written in DocBook yourself, or to even write/contribute content.
+            </para>
+        </abstract>
+    </info>
+
+    <section>
+        <title>Requirements</title>
+        <para>
+            Bascially, you need:
+        </para>
+        <itemizedlist>
+            <listitem>
+                <para>Editor, preferably supports XML</para>
+            </listitem>
+            <listitem>
+                <para>XML toolchain</para>
+            </listitem>
+        </itemizedlist>
+    </section>
+
+    <section>
+        <title>Editors</title>
+        <para>Bascially, any (text) editor will work. However, you have to add those
+            tags manually. That can be very cumbersome. There are a few open source XML
+            editors you can use:</para>
+        <itemizedlist>
+            <listitem>
+                <para>Emacs</para>
+            </listitem>
+            <listitem>
+                <para>Vim</para>
+            </listitem>
+            <listitem>
+                <para>VSCode</para>
+            </listitem>
+        </itemizedlist>
+        <para>
+            You need to configure them properly. For example, you could create recurring
+            snippets that you use very often. Or to use a schema file. This is outside of
+            this session. If you are interested in this, ask the doc team, they can help you.
+        </para>
+        <para>
+            There are other, more advanced, but commerical XML editors. If you want to try
+            these, I'd recommend:
+        </para>
+        <itemizedlist>
+            <listitem>
+                <para><link xlink:href="http://www.xmlmind.com/xmleditor"></link>XMLMind</para>
+            </listitem>
+            <listitem>
+                <para><link xlink:href="https://www.oxygenxml.com/">oXygen XML</link></para>
+            </listitem>
+        </itemizedlist>
+    </section>
+
+    <section xml:id="xml-toolchain">
+        <title>XML toolchain</title>
+        <para>
+            An XML toolchain allows you to do the two most important tasks when working
+            with DocBook:
+        </para>
+        <itemizedlist>
+            <listitem>
+                <para>Validating your document against a schema</para>
+            </listitem>
+            <listitem>
+                <para>Transforming your document into a target format (HTML, PDF, ...)</para>
+            </listitem>
+        </itemizedlist>
+        <para>
+            Of course, it's not limited to these tasks. Depending on your toolchain and how it
+            is configured, it could offer you additional tasks like to check all links or to perform
+            a spellcheck.
+        </para>
+        <para>
+            For using a XML toolchain, you could use one of these:
+        </para>
+        <itemizedlist>
+            <listitem>
+                <formalpara>
+                    <title>Minimal XML toolchain</title>
+                    <para>Install the following packages:</para>
+                </formalpara>
+                <screen>sudo zypper install libxslt-tools libxml2-tools jing \
+  docbook5-xsl-stylesheets docbook_5 xmlgraphics-fop</screen>
+            </listitem>
+            <listitem>
+                <formalpara>
+                    <title>Comfortable XML toolchain (recommended):</title>
+                    <para>Install the following packages:</para>
+                </formalpara>
+                <screen>sudo zypper install daps daps2docker</screen>
+            </listitem>
+        </itemizedlist>
+    </section>
+
+    <section>
+        <title>DocBook's philosophy</title>
+        <para>
+            DocBook cares about "semantic", the meaning of a particular
+            object. The layout is something of second nature and added later.
+        </para>
+        <para>
+            That's why you find in DocBook tag names like <tag>filename</tag> or
+            <tag>example</tag> to help the author to markup their text.
+            You won't find tag names like bold, italic, underline, or other
+            layout information.
+        </para>
+    </section>
+
+    <section>
+        <title>DocBook schemas and versions</title>
+        <para>
+            Currently, there are two main versions in use:
+        </para>
+        <itemizedlist>
+            <listitem>
+                <formalpara>
+                    <title>Version 4.x</title>
+                    <para>
+                        This is the old version that you can find on some
+                        legacy documents.
+                        You won't see any major improvements except bugfixes.
+                    </para>
+                </formalpara>
+            </listitem>
+            <listitem>
+                <formalpara>
+                    <title>Version 5.x (recommended)</title>
+                    <para>
+                        This is the current version. Any development happens
+                        here. If you want to be up-to-date with the latest
+                        DocBook schema and be more future-safe, use this version.
+                    </para>
+                </formalpara>
+            </listitem>
+        </itemizedlist>
+        <para>
+            DocBook is a <emphasis>schema</emphasis>. The DocBook schema defines the
+            DocBook element and attribute names and their parent-child relationships.
+            For example, you can't have a <tag>title</tag> tag without, for example, a
+            <tag>chapter</tag> tag as parent.
+            The DocBook schema defines not only their names and structure them, it
+            defines also the cardinality (how many tags you can use) and in which order
+            is allowed.
+        </para>
+        <para>
+            The DocBook schema itself is just a concept. To work with that, you need
+            a <emphasis>schema file</emphasis>. Unfortunately, the DocBook schema file(s)
+            comes in different formats. In most cases, the two most important formats are:
+        </para>
+        <itemizedlist>
+            <listitem>
+                <formalpara>
+                    <title>Document Type Definitions (DTD)</title>
+                    <para>
+                        This is a very old format and was definied together with XML.
+                        It is mainly used for DocBook version 4.x.
+                    </para>
+                </formalpara>
+            </listitem>
+            <listitem>
+                <formalpara>
+                    <title>RELAX NG (RNG)</title>
+                    <para>
+                        This is a more modern format. It is used for DocBook
+                        version 5.x exclusively.
+                    </para>
+                </formalpara>
+            </listitem>
+        </itemizedlist>
+    </section>
+
+    <section>
+        <title>Working with DocBook documents</title>
+        <para>
+            As said before in <xref linkend="xml-toolchain"/>, the two main tasks for
+            a XML toolchain are:
+        </para>
+        <itemizedlist>
+            <listitem>
+                <formalpara>
+                    <title>Validating</title>
+                    <para>
+                        This means, checking your documents against the rules defined
+                        in the DocBook RELAX NG schema.
+                    </para>
+                </formalpara>
+            </listitem>
+            <listitem>
+                <formalpara>
+                    <title>Transforming</title>
+                    <para>
+                        This means, converting your DocBook document into a target
+                        format. To do this, you need the DocBook XSL stylesheets.
+                        These stylesheets are able to convert your DocBook document
+                        into (X)HTML, PDF, and a few other formats.
+                        It is even possible to customize the DocBook XSL stylesheets
+                        or write your own if you want to support other, unsupported formats.
+                    </para>
+                </formalpara>
+            </listitem>
+        </itemizedlist>
+
+        <section>
+            <title>Validating DocBook documents</title>
+            <para>
+                If you write in DocBook 5.x, use the command <command>jing</command> to
+                validate your document like this (replace <replaceable>XML_FILE</replaceable>
+                with the file name of your DocBook document):
+            </para>
+            <screen>jing /usr/share/xml/docbook/schema/rng/5.2/docbook.rng <replaceable>XML_FILE</replaceable></screen>
+            <para>
+                If everything was fine, you won't get any output (<quote>no news are good news</quote>).
+                In case something is wrong with your XML file, you get an error message pointing
+                to the problem:
+            </para>
+            <screen>article.xml:212:5: fatal: The end-tag for element type "screen" must end with a '>' delimiter.</screen>
+            
+        </section>
+    </section>
+
+    <section>
+        <title>Transforming DocBook documents</title>
+        <para>
+            To <quote>consume</quote> your document, after you have successfully validated it,
+            you can transform it into your target format. For this example, we use HTML5.
+        </para>
+        <screen>xsltproc --output article.html \
+    /usr/share/xml/docbook/stylesheet/nwalsh5/current/xhtml5/docbook.xsl \
+    article.xml</screen>
+        <para>
+            Point your browser to the file <filename>article.html</filename>.
+        </para>
+    </section>
+
+    <section>
+        <title>Further information</title>
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <link xlink:href="https://tdg.docbook.org/tdg/5.2/">DocBook reference documentation</link>
+                    (TDG, The Definitive Guide)
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <link xlink:href="https://github.com/openSUSE/geekodoc">GeekoDoc</link>,
+                    a customization of DocBook for SUSE documentation
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <link xlink:href="https://github.com/openSUSE/daps2docker/">daps2docker</link>,
+                    everything delivered in a container
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <link xlink:href="https://opensuse.github.io/daps/">DAPS User Guide</link>
+                </para>
+            </listitem>
+        </itemizedlist>
+    </section>
+</article>
