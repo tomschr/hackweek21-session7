@@ -242,20 +242,27 @@
             <screen>article.xml:212:5: fatal: The end-tag for element type "screen" must end with a '>' delimiter.</screen>
             
         </section>
-    </section>
 
-    <section>
-        <title>Transforming DocBook documents</title>
-        <para>
-            To <quote>consume</quote> your document, after you have successfully validated it,
-            you can transform it into your target format. For this example, we use HTML5.
-        </para>
-        <screen>xsltproc --output article.html \
+        <section>
+            <title>Transforming DocBook documents</title>
+            <para>
+                To <quote>consume</quote> your document, after you have successfully validated it,
+                you can transform it into your target format. For this example, we use HTML5.
+            </para>
+            <screen>xsltproc --output article.html \
     /usr/share/xml/docbook/stylesheet/nwalsh5/current/xhtml5/docbook.xsl \
     article.xml</screen>
-        <para>
-            Point your browser to the file <filename>article.html</filename>.
-        </para>
+            <para>
+                Point your browser to the file <filename>article.html</filename>.
+            </para>
+            <para>
+                Keep in mind, if your DocBook document has a syntax error, the whole process
+                stops. The transformation can only be executed if your file is syntactically
+                correct.
+                Your file should also be <emphasis>valid</emphasis>. Although you could
+                transform an invalid file, the result will be possibly wrong.
+            </para>
+        </section>
     </section>
 
     <section>
@@ -285,5 +292,5 @@
                 </para>
             </listitem>
         </itemizedlist>
-    </section>
+    </section
 </article>
